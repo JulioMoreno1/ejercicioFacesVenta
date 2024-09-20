@@ -55,4 +55,60 @@ public class PersonaDAO extends DAO{
         }
         return lista;
     }
+    
+    public Persona leerID(Persona auxperson) throws Exception{
+        Persona person;
+        try{
+           this.Conectar();
+           String consultarid = "select CODIGO, NOMBRE, SEXO from PERSONA where CODIGO = ?";
+           pst = this.getCon().prepareStatement(consultarid);
+           pst.setInt(1, auxperson.getCodigo());
+           rs = pst.executeQuery();
+           while(rs.next()){
+               person = new Persona();
+               person.setCodigo(rs.getInt("CODIGO"));
+               person.setNombre(rs.getString("NOMBRE"));
+               person.setSexo(rs.getString("SEXO"));
+           }
+        }catch(Exception ex){
+            throw ex;
+        }finally{
+            this.Cerrar();
+        }
+        return auxperson;
+    }
+    
+    public void modificar(Persona person) throws Exception{
+        try{
+            this.Conectar();
+            String insertperson = "update PERSONA set NOMBRE = ?, SEXO = ? where CODIGO = ?";
+            pst = this.getCon().prepareStatement(insertperson);
+            pst.setString(1, person.getNombre());
+            pst.setString(2, person.getSexo());
+            pst.setInt(3, person.getCodigo());
+            pst.executeUpdate();
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        finally{
+            this.Cerrar();
+        }
+    }
+    
+    public void eliminar(Persona person) throws Exception{
+        try{
+            this.Conectar();
+            String insertperson = "delete from PERSONA where CODIGO = ?";
+            pst = this.getCon().prepareStatement(insertperson);
+            pst.setInt(1, person.getCodigo());
+            pst.executeUpdate();
+        }
+        catch(Exception ex){
+            throw ex;
+        }
+        finally{
+            this.Cerrar();
+        }
+    }
 }
