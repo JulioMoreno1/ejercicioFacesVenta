@@ -6,17 +6,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
-
+    <h:head>
+        <title>Personas</title>
+    </h:head>
+    <h:body>
         <ui:composition template="./WEB-INF/templates/plantilla.xhtml">
-
             <ui:define name="content">
-
+                <f:event type="preRenderView" listener="#{personaBean.listar('F')}" />
                 <p:growl id="msj" showDetail="true" />
-
                 <h:form id="frm">
                     <p:commandButton value="Nuevo" oncomplete="PF('wdglDatos').show();" actionListener="#{personaBean.setAccion('Registrar')}" update=":dlgDatos"/>
-                    <p:commandButton value="Listar" actionListener="#{personaBean.listar()}" update="data"/>
                     <p:dataTable id="data" value="#{personaBean.lstpersonas}" var="persona">
                         <p:column headerText="Nombre">
                             <p:outputLabel value="#{persona.nombre}"/>
@@ -38,7 +37,6 @@
                     <h:form>
                         <p:outputLabel value="Nombre"/>
                         <p:inputText value="#{personaBean.person.nombre}"/>
-
                         <p:outputLabel value="Sexo"/>
                         <p:selectOneMenu value="#{personaBean.person.sexo}">
                             <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
@@ -49,8 +47,6 @@
                     </h:form>
                 </p:dialog>
             </ui:define>
-
         </ui:composition>
-
-    </body>
+    </h:body>
 </html>

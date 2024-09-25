@@ -1,35 +1,35 @@
 package bean;
 
-import dao.PersonaDAO;
+import dao.ProductoDAO;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import model.Persona;
+import model.Producto;
 
 @ManagedBean
 @ViewScoped
-public class PersonaBean {
+public class ProductoBean {
 
-    private Persona person = new Persona();
-    private List<Persona> lstpersonas;
+    private Producto product = new Producto();
+    private List<Producto> lstProductos;
     private String accion;
 
-    public Persona getPerson() {
-        return person;
+    public Producto getproduct() {
+        return product;
     }
 
-    public void setPerson(Persona person) {
-        this.person = person;
+    public void setproduct(Producto product) {
+        this.product = product;
     }
 
-    public List<Persona> getLstpersonas() {
-        return lstpersonas;
+    public List<Producto> getLstProductos() {
+        return lstProductos;
     }
 
-    public void setLstpersonas(List<Persona> lstpersonas) {
-        this.lstpersonas = lstpersonas;
+    public void setLstProductos(List<Producto> lstProductos) {
+        this.lstProductos = lstProductos;
     }
 
     public String getAccion() {
@@ -43,11 +43,11 @@ public class PersonaBean {
 
     private void registrar() throws Exception {
 
-        PersonaDAO dao;
+        ProductoDAO dao;
 
         try {
-            dao = new PersonaDAO();
-            dao.registrar(person);
+            dao = new ProductoDAO();
+            dao.registrar(product);
             this.listar("T");
         } catch (Exception ex) {
             throw ex;
@@ -55,31 +55,33 @@ public class PersonaBean {
     }
 
     public void listar(String bandera) throws Exception {
-        PersonaDAO dao;
+        ProductoDAO dao;
+
         try {
             if (bandera.equals("F")) {
-                if (isPostBack() == false) {
-                    dao = new PersonaDAO();
-                    lstpersonas = dao.listar();
+                if(!isPostBack()){
+                    dao = new ProductoDAO();
+                    lstProductos = dao.listar();
                 }
+
             } else {
-                dao = new PersonaDAO();
-                lstpersonas = dao.listar();
+                dao = new ProductoDAO();
+                lstProductos = dao.listar();
             }
         } catch (Exception ex) {
             throw ex;
         }
     }
 
-    public void leerID(Persona auxperson) throws Exception {
-        PersonaDAO dao;
-        Persona tempperson;
+    public void leerID(Producto auxproduct) throws Exception {
+        ProductoDAO dao;
+        Producto tempproduct;
 
         try {
-            dao = new PersonaDAO();
-            tempperson = dao.leerID(auxperson);
-            if (tempperson != null) {
-                this.person = tempperson;
+            dao = new ProductoDAO();
+            tempproduct = dao.leerID(auxproduct);
+            if (tempproduct != null) {
+                this.product = tempproduct;
                 this.accion = "Modificar";
             }
         } catch (Exception ex) {
@@ -89,24 +91,24 @@ public class PersonaBean {
 
     private void modificar() throws Exception {
 
-        PersonaDAO dao;
+        ProductoDAO dao;
 
         try {
-            dao = new PersonaDAO();
-            dao.modificar(person);
+            dao = new ProductoDAO();
+            dao.modificar(product);
             this.listar("T");
         } catch (Exception ex) {
             throw ex;
         }
     }
 
-    public void eliminar(Persona auxperson) throws Exception {
+    public void eliminar(Producto auxproduct) throws Exception {
 
-        PersonaDAO dao;
+        ProductoDAO dao;
 
         try {
-            dao = new PersonaDAO();
-            dao.eliminar(auxperson);
+            dao = new ProductoDAO();
+            dao.eliminar(auxproduct);
             this.listar("T");
         } catch (Exception ex) {
             throw ex;
@@ -127,11 +129,11 @@ public class PersonaBean {
     }
 
     public void limpiar() {
-        this.person.setCodigo(0);
-        this.person.setNombre("");
-        this.person.setSexo("");
+        this.product.setCodigo(0);
+        this.product.setNombre("");
+        this.product.setPrecio(0.0);
     }
-
+    
     private boolean isPostBack() {
         boolean rpta;
         rpta = FacesContext.getCurrentInstance().isPostback();

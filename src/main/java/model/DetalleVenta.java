@@ -4,6 +4,7 @@ package model;
 public class DetalleVenta {
     
     private int codigo;
+    private int cantidad;
     private Venta venta;
     private Producto producto;
     private double monto;
@@ -16,6 +17,14 @@ public class DetalleVenta {
         this.codigo = codigo;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+    
     public Venta getVenta() {
         return venta;
     }
